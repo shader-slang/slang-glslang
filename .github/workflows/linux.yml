@@ -41,6 +41,6 @@ jobs:
         with:
           name: slang-glslang-linux-x86_64-${{matrix.configuration}}
           path: |
-            bin/**/*
+            bin/**/*.so
             README.md
             
