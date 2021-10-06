@@ -1,0 +1,10 @@
+{
+    "project": {
+        "name" : "slang-glslang",
+        "dependencies" : [
+            {
+                
+            }
+        ]
+    }
+}
