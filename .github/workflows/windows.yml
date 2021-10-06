@@ -27,5 +27,13 @@ jobs:
           .\premake.bat vs2019 --deps=true --no-progress=true
       - name: msbuild
         run:
-          MSBuild.exe slang-llvm.sln -v:m -m -property:Configuration=${{matrix.configuration}} -property:Platform=${{matrix.platform}} -property:WindowsTargetPlatformVersion=10.0.19041.0
+          MSBuild.exe slang-glslang.sln -v:m -m -property:Configuration=${{matrix.configuration}} -property:Platform=${{matrix.platform}} -property:WindowsTargetPlatformVersion=10.0.19041.0
           
+       # https://github.com/actions/upload-artifact
+      - uses: actions/upload-artifact@v2
+        with:
+          name: slang-glslang-windows-${{matrix.platform}}-${{matrix.configuration}}
+          path: |
+            bin/**/*
+            README.md
+      
