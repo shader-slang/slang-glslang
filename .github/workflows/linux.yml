@@ -15,7 +15,8 @@ jobs:
       matrix:
         # Might want debug once release works
         configuration: ['release'] # , 'debug']
-        platform: ['x86', 'x64']
+        # Can't build 'x86' on github without multilib...
+        platform: ['x64']
         
     steps:   
       - uses: actions/checkout@v2.3.4
