@@ -34,6 +34,6 @@ jobs:
         with:
           name: slang-glslang-windows-${{matrix.platform}}-${{matrix.configuration}}
           path: |
-            bin/**/*
+            bin/**/*.dll
             README.md
       
