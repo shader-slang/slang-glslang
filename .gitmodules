@@ -1,0 +1,16 @@
+[submodule "external/slang"]
+	path = external/slang
+	url = https://github.com/shader-slang/slang.git
+[submodule "external/glslang"]
+	path = external/glslang
+	url = https://github.com/shader-slang/glslang.git
+[submodule "external/slang-binaries"]
+	path = external/slang-binaries
+    url = https://github.com/shader-slang/slang-binaries.git
+    
+[submodule "external/spirv-headers"]
+	path = external/spirv-headers
+	url = git@github.com:KhronosGroup/SPIRV-Headers.git
+[submodule "external/spirv-tools"]
+	path = external/spirv-tools
+	url = git@github.com:KhronosGroup/SPIRV-Tools.git

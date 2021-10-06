@@ -1,2 +1,3 @@
 # slang-glslang
-Slang Build of GLSLANG
+
+A project to build the Slang version of GLSLAN.
