@@ -13,8 +13,6 @@ jobs:
     strategy:
       matrix:
         configuration: ['Release']
-        # Currently only support x64, as only have LLVM binaries for that
-        # platform: ['Win32', 'x64']
         platform: ['x64', 'Win32', 'aarch64']
     steps:
       - uses: actions/checkout@v2.3.4

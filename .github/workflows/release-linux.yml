@@ -9,16 +9,13 @@ on:
 jobs:
   build:
     name: Upload Asset - Linux
-    # The CMake configure and build commands are platform agnostic and should work equally
-    # well on Windows or Mac.  You can convert this to a matrix build if you need
-    # cross-platform coverage.
-    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
     runs-on: ubuntu-latest
     
     strategy:
       matrix:
         # Might want debug once release works
         configuration: ['release'] # , 'debug']
+        platform: ['x86', 'x64']
         
     steps:   
       - uses: actions/checkout@v2.3.4
@@ -34,7 +31,7 @@ jobs:
 
       - name: Build
         run: |
-          make config=${{matrix.configuration}}_x64 verbose=1 -j`nproc`
+          make config=${{matrix.configuration}}_${{matrix.platform}} verbose=1 -j`nproc`
           
       - name: archive
         id: archive
@@ -42,7 +39,7 @@ jobs:
           echo "achiving files..."
           
           ARCH_NAME=`uname -p`
-          PLATFORM_NAME="linux-x86_64"
+          PLATFORM_NAME="linux-${{matrix.platform}}"
           TAG_NAME=`git describe --tags`
           SLANG_GLSLANG_VERSION=${TAG_NAME#"v"}
           

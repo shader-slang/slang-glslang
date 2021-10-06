@@ -9,16 +9,13 @@ on:
 jobs:
   build:
     name: Linux Build CI
-    # The CMake configure and build commands are platform agnostic and should work equally
-    # well on Windows or Mac.  You can convert this to a matrix build if you need
-    # cross-platform coverage.
-    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
     runs-on: ubuntu-latest
     
     strategy:
       matrix:
         # Might want debug once release works
         configuration: ['release'] # , 'debug']
+        platform: ['x86', 'x64']
         
     steps:   
       - uses: actions/checkout@v2.3.4
@@ -34,12 +31,12 @@ jobs:
 
       - name: Build
         run: |
-          make config=${{matrix.configuration}}_x64 -j`nproc`
+          make config=${{matrix.configuration}}_${{matrix.platform}} -j`nproc`
           
       # https://github.com/actions/upload-artifact
       - uses: actions/upload-artifact@v2
         with:
-          name: slang-glslang-linux-x86_64-${{matrix.configuration}}
+          name: slang-glslang-linux-${{matrix.platform}}-${{matrix.configuration}}
           path: |
             bin/**/*.so
             README.md
