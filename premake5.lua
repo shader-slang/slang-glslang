@@ -34,7 +34,7 @@ end
 workspace "slang-glslang"
     -- We will support debug/release configuration and x86/x64 builds.
     configurations { "Debug", "Release" }
-    platforms { "x86", "x64"}
+    platforms { "x86", "x64", "aarch64"}
     
     if os.target() == "linux" then
         platforms {"aarch64" }
@@ -50,12 +50,22 @@ workspace "slang-glslang"
     -- and configuration options, e.g. `bin/windows-x64/debug/`
     targetdir("bin/" .. targetInfo.tokenName .. "/%{cfg.buildcfg:lower()}")
 
-    -- C++14 
-    --cppdialect "C++14"
+    -- C++11 
+    cppdialect "C++11"
     
     -- Exceptions have to be turned off for linking against LLVM
     --exceptionhandling("Off")
     --rtti("Off")
+    
+    -- Our `x64` platform should (obviously) target the x64
+     -- architecture and similarly for x86.
+     filter { "platforms:x64" }
+         architecture "x64"
+     filter { "platforms:x86" }
+         architecture "x86"
+     filter { "platforms:aarch64"}
+         architecture "ARM"
+         editandcontinue "Off"
     
     -- Statically link to the C/C++ runtime rather than create a DLL dependency.
     staticruntime "On"
@@ -65,15 +75,6 @@ workspace "slang-glslang"
     -- changes the "active" filter for subsequent commands. In
     -- effect, those commands iwll be ignored when the conditions of
     -- the filter aren't satisfied.
-
-    -- Our `x64` platform should (obviously) target the x64
-    -- architecture and similarly for x86.
-    filter { "platforms:x64" }
-        architecture "x64"
-    filter { "platforms:x86" }
-        architecture "x86"
-    filter { "platforms:aarch64"}
-        architecture "ARM"
 
     filter { "toolset:clang or gcc*" }  
         buildoptions { "-fvisibility=hidden" } 
