@@ -1,0 +1,39 @@
+name: Windows Build CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ] 
+
+jobs:
+  build:
+    name: Windows Build CI
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        configuration: ['Release']
+
+        platform: ['x64', 'Win32', 'aarch64']
+    steps:
+      - uses: actions/checkout@v2.3.4
+        with:
+          submodules: 'true'
+          fetch-depth: '0'
+      - name: setup-msbuild
+        uses: microsoft/setup-msbuild@v1
+      - name: premake
+        run:
+          .\premake.bat vs2019 --deps=true --no-progress=true
+      - name: msbuild
+        run:
+          MSBuild.exe slang-glslang.sln -v:m -m -property:Configuration=${{matrix.configuration}} -property:Platform=${{matrix.platform}} -property:WindowsTargetPlatformVersion=10.0.19041.0
+          
+       # https://github.com/actions/upload-artifact
+      - uses: actions/upload-artifact@v2
+        with:
+          name: slang-glslang-windows-${{matrix.platform}}-${{matrix.configuration}}
+          path: |
+            bin/**/*
+            README.md
+      
