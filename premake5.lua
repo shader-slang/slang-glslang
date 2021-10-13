@@ -13,15 +13,19 @@ package.path = package.path .. ";" .. modulePath
 slangPack = require("slang-pack")
 slangUtil = require("slang-util")
 
+-- Load the dependencies from the json file
+
+deps = slangPack.loadDependencies("deps/target-deps.json")
+
 -- Determine the target info
 
 targetInfo = slangUtil.getTargetInfo()
 
 --
--- Download any dependencies. Will only do this if --deps=true is set
+-- Update the dependencies for the target
 --
 
-slangPack.maybeUpdateDependencies(targetInfo.name)
+deps:update(targetInfo.name)
 
 -- This is needed for gcc, for the 'fileno' functions on cygwin
 -- _GNU_SOURCE makes realpath available in gcc
