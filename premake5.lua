@@ -111,7 +111,7 @@ workspace "slang-glslang"
         buildoptions { "-fno-semantic-interposition", "-ffunction-sections", "-fdata-sections" }
         -- z is for zlib support
         -- tinfo is for terminal info
-        links { "pthread", "tinfo", "stdc++", "dl", "rt", "z" }
+        links { "pthread", "stdc++", "dl", "rt"}
         linkoptions{  "-Wl,-rpath,'$$ORIGIN',--no-as-needed,--no-undefined,--start-group" }
                          
 --
