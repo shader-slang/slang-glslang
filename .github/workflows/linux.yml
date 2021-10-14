@@ -35,10 +35,10 @@ jobs:
           make config=${{matrix.configuration}}_${{matrix.platform}} -j`nproc`
           
       # https://github.com/actions/upload-artifact
-      - uses: actions/upload-artifact@v2
-        with:
-          name: slang-glslang-linux-${{matrix.platform}}-${{matrix.configuration}}
-          path: |
-            bin/**/*.so
-            README.md
+      #- uses: actions/upload-artifact@v2
+      #  with:
+      #    name: slang-glslang-linux-${{matrix.platform}}-${{matrix.configuration}}
+      #    path: |
+      #      bin/**/*.so
+      #      README.md
             
