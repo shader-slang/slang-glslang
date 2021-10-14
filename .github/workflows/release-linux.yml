@@ -13,7 +13,6 @@ jobs:
     
     strategy:
       matrix:
-        # Might want debug once release works
         configuration: ['release'] # , 'debug']
         # Can't build 'x86' on github without multilib...
         platform: ['x64']
@@ -40,14 +39,13 @@ jobs:
           echo "achiving files..."
           
           ARCH_NAME=`uname -p`
-          PLATFORM_NAME="linux-${{matrix.platform}}"
           TAG_NAME=`git describe --tags`
-          SLANG_GLSLANG_VERSION=${TAG_NAME#"v"}
+          GLSLANG_VERSION=${TAG_NAME#"v"}
           
           echo "tag:$TAG_NAME"
-          echo "slang-glslang-version:$GLSLANG_VERSION"
+          echo "glslang-version:$GLSLANG_VERSION"
           
-          BIN_ARCHIVE="slang-glslang-$TAG_NAME-$PLATFORM_NAME-${{matrix.configuration}}.zip"
+          BIN_ARCHIVE="slang-glslang-$GLSLANG_VERSION-linux-${{matrix.platform}}-${{matrix.configuration}}.zip"
 
           zip "$BIN_ARCHIVE" README.md
           zip "$BIN_ARCHIVE" LICENSE

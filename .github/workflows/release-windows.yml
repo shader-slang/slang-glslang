@@ -12,8 +12,8 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        configuration: ['Release']
-        platform: ['x64', 'Win32', 'aarch64']
+        configuration: ['release'] #, 'debug']
+        platform: ['x64', 'win32', 'aarch64']
     steps:
       - uses: actions/checkout@v2.3.4
         with:
@@ -32,8 +32,8 @@ jobs:
         run: |
           echo "achiving files..."
           $tagName = & git describe --tags
-          $slangVersion = $tagName.TrimStart("v")
-          $binArchive = "slang-llvm-$slangVersion-${{matrix.platform}}-${{matrix.configuration}}.zip"
+          $glslangVersion = $tagName.TrimStart("v")
+          $binArchive = "slang-glslang-$glslangVersion-windows-${{matrix.platform}}-${{matrix.configuration}}.zip"
 
           echo "name=BINARY_ARCHIVE::$binArchive"
           echo "::set-output name=BINARY_ARCHIVE::$binArchive"
