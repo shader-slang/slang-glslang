@@ -1,4 +1,4 @@
-name: Upload Asset - Linux
+name: Upload Asset - MacOS
 
 on:
   push:
@@ -8,13 +8,13 @@ on:
     
 jobs:
   build:
-    name: Upload Asset - Linux
-    runs-on: ubuntu-18.04
+    name: Upload Asset - MacOS
+    runs-on: macos-latest
     
     strategy:
       matrix:
         configuration: ['release'] # , 'debug']
-        platform: ['x64', 'x86']
+        platform: ['x64']
         
     steps:   
       - uses: actions/checkout@v2.3.4
@@ -22,26 +22,26 @@ jobs:
           submodules: 'true'
           fetch-depth: '0'
           
-      - name: install multi-lib
-        run: |
-          if [[ "${{matrix.platform}}" == "x86" ]]; then
-            sudo apt-get install gcc-multilib g++-multilib
-          fi
-
       - name: premake
         run: |
-          PREMAKE=external/slang-binaries/premake/premake-5.0.0-alpha16/bin/linux-64/premake5
+          PREMAKE=external/slang-binaries/premake/premake-5.0.0-alpha16/bin/osx/premake5
           chmod u+x ${PREMAKE}
           ${PREMAKE} gmake --deps=true --no-progress=true          
 
       - name: Build
         run: |
-          make config=${{matrix.configuration}}_${{matrix.platform}} -j`nproc`
+          make config=${{matrix.configuration}}_${{matrix.platform}} -j`sysctl -n hw.ncpu`
           
       - name: archive
         id: archive
         run: |
           echo "achiving files..."
+
+          PLATFORM="${{matrix.platform}}"
+          
+          if [[ "${PLATFORM}" == "x64" ]]; then
+            PLATFORM="x86_64"
+          fi
           
           ARCH_NAME=`uname -p`
           TAG_NAME=`git describe --tags`
@@ -50,11 +50,11 @@ jobs:
           echo "tag:$TAG_NAME"
           echo "glslang-version:$GLSLANG_VERSION"
           
-          BIN_ARCHIVE="slang-glslang-$GLSLANG_VERSION-linux-${{matrix.platform}}-${{matrix.configuration}}.zip"
+          BIN_ARCHIVE="slang-glslang-$GLSLANG_VERSION-macosx-${PLATFORM}-${{matrix.configuration}}.zip"
 
           zip "$BIN_ARCHIVE" README.md
           zip "$BIN_ARCHIVE" LICENSE
-          zip "$BIN_ARCHIVE" -r bin/*/*/*.so
+          zip "$BIN_ARCHIVE" -r bin/*/*/*.dylib
           
           echo "name=BINARY_ARCHIVE::$BIN_ARCHIVE"
           echo "::set-output name=BINARY_ARCHIVE::$BIN_ARCHIVE"
