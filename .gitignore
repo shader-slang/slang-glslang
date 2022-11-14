@@ -16,7 +16,6 @@
 
 bin/
 intermediate/
-external/
 build/
 
 build.*/
