@@ -15,13 +15,15 @@ jobs:
       matrix:
         configuration: ['release'] # , 'debug']
         platform: ['x64']
-        
+
     steps:   
       - uses: actions/checkout@v2.3.4
         with:
           submodules: 'true'
           fetch-depth: '0'
-          
+          # Build from the tag that triggered the build
+          ref: ${{github.ref_name}}
+
       - name: premake
         run: |
           PREMAKE=external/slang-binaries/premake/premake-5.0.0-alpha16/bin/osx/premake5

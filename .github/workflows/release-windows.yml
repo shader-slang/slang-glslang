@@ -19,6 +19,9 @@ jobs:
         with:
           submodules: 'true'
           fetch-depth: '0'
+          # Build from the tag that triggered the build
+          ref: ${{github.ref_name}}
+
       - name: setup-msbuild
         uses: microsoft/setup-msbuild@v1
       - name: premake
@@ -52,4 +55,4 @@ jobs:
             ${{ steps.archive.outputs.BINARY_ARCHIVE }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
+
