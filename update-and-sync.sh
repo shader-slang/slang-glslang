@@ -46,7 +46,7 @@ git -C "$slang" fetch --tags --force
 old_ref=$(describe "$slang")
 git submodule update --remote --checkout "$slang"
 git -C "$slang" submodule update --init --recursive
-old_ref=$(describe "$slang")
+new_ref=$(describe "$slang")
 if [ "$old_ref" != "$new_ref" ]; then
   paths+=("$slang")
   echo "${slang#"$dir/"}: $old_ref -> $new_ref" >> "$msg"
