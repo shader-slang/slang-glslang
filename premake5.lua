@@ -44,6 +44,8 @@ workspace "slang-glslang"
         platforms {"aarch64" }
     end
     
+    flags "MultiProcessorCompile"
+    
     -- 
     -- Make slang-glslang the startup project.
     --
