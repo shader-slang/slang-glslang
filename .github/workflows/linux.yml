@@ -23,12 +23,6 @@ jobs:
           submodules: 'true'
           fetch-depth: '0'
 
-      - name: install multi-lib
-        run: |
-          if [[ "${{matrix.platform}}" == "x86" ]]; then
-            sudo apt-get install gcc-multilib g++-multilib
-          fi
-
       - name: premake
         run: |
           PREMAKE=external/slang-binaries/premake/premake-5.0.0-alpha16/bin/linux-64/premake5
