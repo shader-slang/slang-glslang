@@ -57,7 +57,7 @@ workspace "slang-glslang"
     targetdir("bin/" .. targetInfo.tokenName .. "/%{cfg.buildcfg:lower()}")
 
     -- C++11 
-    cppdialect "C++11"
+    cppdialect "C++17"
     
     -- Exceptions have to be turned off for linking against LLVM
     --exceptionhandling("Off")
