@@ -14,7 +14,7 @@ jobs:
     strategy:
       matrix:
         configuration: ['release'] # , 'debug']
-        platform: ['x64', 'x86', 'aarch64' ]
+        platform: ['x64', 'aarch64' ]
         
     steps:   
       - uses: actions/checkout@v2.3.4
