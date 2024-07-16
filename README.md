@@ -1,3 +1,9 @@
+# Deprecated Repo
+
+Please don't use this repo directly as it has been integrated into
+[slang](https://github.com/shader-slang/slang/tree/master/source/slang-glslang).
+Please make changes there instead.
+
 # slang-glslang
 
 A project to build the Slang version of GLSLANG.
